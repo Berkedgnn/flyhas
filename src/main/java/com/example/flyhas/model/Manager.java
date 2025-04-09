@@ -11,6 +11,11 @@ public class Manager extends BaseUser {
     @NotBlank(message = "Employee number is required")
     private String employeeNumber;
 
+    @Override
+    public String getRole() {
+        return "MANAGER";
+    }
+
     public String getEmployeeNumber() {
         return employeeNumber;
     }

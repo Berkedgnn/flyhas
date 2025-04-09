@@ -16,7 +16,7 @@ public class JwtTokenUtil {
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final long expirationMillis = 86400000; // Token geçerlilik süresi: 1 gün
 
-    // BaseUser üzerinden token üretir ve role claim'ini ekler.
+    // BaseUser üzerinden token üretir, role ve firstName claim'lerini ekler.
     public String generateToken(BaseUser user) {
         String role;
         if (user instanceof Customer) {
@@ -32,6 +32,7 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("role", role)
+                .claim("firstName", user.getFirstName()) // 👈 Kullanıcının adı ekleniyor
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(key)
@@ -56,6 +57,16 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .get("role");
+    }
+
+    // 👇 Token'dan firstName çıkarma metodu
+    public String extractFirstName(String token) {
+        return (String) Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("firstName");
     }
 
     // Token'ın geçerli olup olmadığını kontrol eder.

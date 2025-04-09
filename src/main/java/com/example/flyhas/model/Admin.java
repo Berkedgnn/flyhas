@@ -17,6 +17,12 @@ public class Admin extends BaseUser {
     @NotBlank(message = "Department is required")
     private String department;
 
+    // ✅ Rol override
+    @Override
+    public String getRole() {
+        return "ADMIN";
+    }
+
     // Getter and Setter
     public String getEmployeeNumber() {
         return employeeNumber;

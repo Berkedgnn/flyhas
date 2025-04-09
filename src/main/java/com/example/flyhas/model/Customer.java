@@ -9,6 +9,11 @@ public class Customer extends BaseUser {
 
     private String nationalId;
 
+    @Override
+    public String getRole() {
+        return "CUSTOMER";
+    }
+
     // Getter and Setter
     public String getNationalId() {
         return nationalId;
