@@ -16,7 +16,6 @@ public abstract class BaseUser {
     private String password;
     private LocalDate birthDate;
 
-    // ✅ Soyut method: Her alt sınıf kendi rolünü belirtmeli
     public abstract String getRole();
 
     // Getters and Setters

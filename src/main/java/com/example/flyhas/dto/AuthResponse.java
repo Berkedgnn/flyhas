@@ -4,8 +4,8 @@ public class AuthResponse {
 
     private String token;
     private String email;
-    private String role; // 👈 Yeni eklendi
-    private String firstName; // 👈 Yeni eklendi
+    private String role;
+    private String firstName;
 
     public AuthResponse(String token, String email, String role, String firstName) {
         this.token = token;

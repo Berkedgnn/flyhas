@@ -14,9 +14,8 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long expirationMillis = 86400000; // Token geçerlilik süresi: 1 gün
+    private final long expirationMillis = 86400000;
 
-    // BaseUser üzerinden token üretir, role ve firstName claim'lerini ekler.
     public String generateToken(BaseUser user) {
         String role;
         if (user instanceof Customer) {
@@ -32,14 +31,13 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("role", role)
-                .claim("firstName", user.getFirstName()) // 👈 Kullanıcının adı ekleniyor
+                .claim("firstName", user.getFirstName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(key)
                 .compact();
     }
 
-    // Token içinden kullanıcı email'ini çıkarır.
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -49,7 +47,6 @@ public class JwtTokenUtil {
                 .getSubject();
     }
 
-    // Token içinden role bilgisini çıkarır.
     public String extractRole(String token) {
         return (String) Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -59,7 +56,6 @@ public class JwtTokenUtil {
                 .get("role");
     }
 
-    // 👇 Token'dan firstName çıkarma metodu
     public String extractFirstName(String token) {
         return (String) Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -69,7 +65,6 @@ public class JwtTokenUtil {
                 .get("firstName");
     }
 
-    // Token'ın geçerli olup olmadığını kontrol eder.
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

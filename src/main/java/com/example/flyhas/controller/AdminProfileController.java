@@ -25,7 +25,6 @@ public class AdminProfileController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 🟢 ADMIN PROFİL GETİRME
     @GetMapping("/admin")
     public ResponseEntity<Admin> getAdminProfile(@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
@@ -36,7 +35,6 @@ public class AdminProfileController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // 🟠 ADMIN PROFİL GÜNCELLEME
     @PutMapping("/admin")
     public ResponseEntity<String> updateAdminProfile(
             @Valid @RequestBody Admin updatedAdmin,
@@ -61,7 +59,6 @@ public class AdminProfileController {
         return ResponseEntity.ok("Profile updated successfully");
     }
 
-    // 🔐 ŞİFRE GÜNCELLEME
     @PutMapping("/admin/password")
     public ResponseEntity<String> changePassword(
             @RequestBody ChangePasswordRequest request,

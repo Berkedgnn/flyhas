@@ -25,7 +25,6 @@ public class CustomerProfileController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 🟢 CUSTOMER PROFİL GETİRME
     @GetMapping("/customer")
     public ResponseEntity<Customer> getCustomerProfile(@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
@@ -36,7 +35,6 @@ public class CustomerProfileController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // 🟠 CUSTOMER PROFİL GÜNCELLEME
     @PutMapping("/customer")
     public ResponseEntity<String> updateCustomerProfile(
             @Valid @RequestBody Customer updatedCustomer,
@@ -54,13 +52,11 @@ public class CustomerProfileController {
         customer.setLastName(updatedCustomer.getLastName());
         customer.setNationalId(updatedCustomer.getNationalId());
         customer.setBirthDate(updatedCustomer.getBirthDate());
-        // Email, rol ve şifre güncellenmez
 
         customerRepository.save(customer);
         return ResponseEntity.ok("Customer profile updated successfully");
     }
 
-    // 🔐 ŞİFRE GÜNCELLEME
     @PutMapping("/customer/password")
     public ResponseEntity<String> changePassword(
             @RequestBody ChangePasswordRequest request,

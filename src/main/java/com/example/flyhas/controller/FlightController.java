@@ -15,19 +15,16 @@ public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
 
-    // Tüm uçuşları getir
     @GetMapping
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
     }
 
-    // Yeni uçuş ekle
     @PostMapping
     public Flight createFlight(@RequestBody Flight flight) {
         return flightRepository.save(flight);
     }
 
-    // Uçuş sil
     @DeleteMapping("/{id}")
     public void deleteFlight(@PathVariable Long id) {
         flightRepository.deleteById(id);
