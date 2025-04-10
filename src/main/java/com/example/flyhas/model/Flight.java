@@ -2,6 +2,7 @@ package com.example.flyhas.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Flight {
@@ -15,8 +16,18 @@ public class Flight {
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
 
-    // Getter & Setter'lar
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Seat> seats;
 
+    // === EKLENDİ ===
+    @Transient
+    public boolean isFullyBooked() {
+        if (seats == null || seats.isEmpty())
+            return false;
+        return seats.stream().allMatch(Seat::isReserved);
+    }
+
+    // Getter & Setter'lar
     public Long getId() {
         return id;
     }
@@ -55,5 +66,13 @@ public class Flight {
 
     public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
 }
