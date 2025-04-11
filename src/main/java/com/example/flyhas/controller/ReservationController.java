@@ -7,6 +7,8 @@ import com.example.flyhas.repository.ReservationRepository;
 import com.example.flyhas.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,5 +51,13 @@ public class ReservationController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(savedReservations);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<Reservation>> getMyReservations(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername(); // token'dan gelen email
+        List<Reservation> reservations = reservationRepository.findByReservedBy(email);
+        return ResponseEntity.ok(reservations);
     }
 }
