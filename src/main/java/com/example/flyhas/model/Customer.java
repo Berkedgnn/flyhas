@@ -1,5 +1,6 @@
 package com.example.flyhas.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.Table;
 @Table(name = "customers")
 public class Customer extends BaseUser {
 
+    @Column(unique = true)
     private String nationalId;
 
     @Override

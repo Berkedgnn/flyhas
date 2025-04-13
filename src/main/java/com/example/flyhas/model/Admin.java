@@ -1,5 +1,6 @@
 package com.example.flyhas.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ public class Admin extends BaseUser {
     private String employeeNumber;
 
     @NotBlank(message = "National ID is required")
+    @Column(unique = true)
     private String nationalId;
 
     @NotBlank(message = "Department is required")

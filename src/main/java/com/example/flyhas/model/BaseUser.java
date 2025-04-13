@@ -12,6 +12,8 @@ public abstract class BaseUser {
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
     private String password;
     private LocalDate birthDate;

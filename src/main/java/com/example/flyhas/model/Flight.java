@@ -19,7 +19,6 @@ public class Flight {
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seat> seats;
 
-    // === EKLENDİ ===
     @Transient
     public boolean isFullyBooked() {
         if (seats == null || seats.isEmpty())
