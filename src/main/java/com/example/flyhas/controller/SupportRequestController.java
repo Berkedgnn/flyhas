@@ -152,4 +152,30 @@ public class SupportRequestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateSupportRequest(
+            @PathVariable Long id,
+            @RequestParam("errorCode") String errorCode,
+            @RequestParam("message") String message,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        SupportRequest req = supportRequestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        if (!req.getCustomer().getEmail().equals(userDetails.getUsername())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You can only update your own requests.");
+        }
+
+        req.setErrorCode(errorCode);
+        req.setMessage(message);
+        if (image != null && !image.isEmpty()) {
+            String filename = fileStorageService.storeFile(image);
+            req.setScreenshot("/api/support/image/" + filename);
+        }
+        supportRequestRepository.save(req);
+        return ResponseEntity.ok("Request updated.");
+    }
 }
