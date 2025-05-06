@@ -1,5 +1,6 @@
 package com.example.flyhas.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "managers")
 public class Manager extends BaseUser {
 
-    @NotBlank(message = "Employee number is required")
+    @Column(nullable = false, unique = true)
     private String employeeNumber;
 
     @Override
