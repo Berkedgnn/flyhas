@@ -1,11 +1,13 @@
 package com.example.flyhas.controller;
 
+import com.example.flyhas.dto.CheckInRequest;
 import com.example.flyhas.dto.ReservationRequest;
 import com.example.flyhas.model.Reservation;
 import com.example.flyhas.model.Seat;
 import com.example.flyhas.repository.ReservationRepository;
 import com.example.flyhas.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,6 +48,7 @@ public class ReservationController {
             reservation.setNationalId(request.getNationalId());
             reservation.setReservedBy(request.getReservedBy());
             reservation.setSeat(seat);
+            reservation.setCheckedIn(false);
 
             return reservationRepository.save(reservation);
         }).collect(Collectors.toList());
@@ -56,8 +59,27 @@ public class ReservationController {
     @GetMapping("/my")
     public ResponseEntity<List<Reservation>> getMyReservations(
             @AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername(); // token'dan gelen email
+        String email = userDetails.getUsername();
         List<Reservation> reservations = reservationRepository.findByReservedBy(email);
         return ResponseEntity.ok(reservations);
+    }
+
+    @PostMapping("/checkin/validate")
+    public ResponseEntity<Reservation> validateCheckIn(@RequestBody CheckInRequest req) {
+        return reservationRepository
+                .findByReservationCodeAndLastName(req.getReservationCode(), req.getLastName())
+                .map(res -> ResponseEntity.ok(res))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PatchMapping("/checkin/{id}")
+    public ResponseEntity<Reservation> performCheckIn(@PathVariable Long id) {
+        return reservationRepository.findById(id)
+                .map(res -> {
+                    res.setCheckedIn(true);
+                    reservationRepository.save(res);
+                    return ResponseEntity.ok(res);
+                })
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

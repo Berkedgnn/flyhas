@@ -24,13 +24,15 @@ public class Reservation {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
+    @Column(name = "checked_in", nullable = false)
+    private boolean checkedIn = false;
+
     @PrePersist
     public void generateReservationCode() {
         this.reservationCode = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
         System.out.println(" Reservation Code Generated: " + reservationCode);
     }
 
-    // Getter - Setter’lar
     public Long getId() {
         return id;
     }
@@ -93,5 +95,13 @@ public class Reservation {
 
     public void setSeat(Seat seat) {
         this.seat = seat;
+    }
+
+    public boolean isCheckedIn() {
+        return checkedIn;
+    }
+
+    public void setCheckedIn(boolean checkedIn) {
+        this.checkedIn = checkedIn;
     }
 }
