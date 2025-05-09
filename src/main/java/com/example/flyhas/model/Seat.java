@@ -19,7 +19,6 @@ public class Seat {
     @JsonBackReference
     private Flight flight;
 
-    // Getter & Setter'lar
     public Long getId() {
         return id;
     }

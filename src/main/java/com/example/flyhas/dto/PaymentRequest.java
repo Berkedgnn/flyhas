@@ -7,8 +7,6 @@ public class PaymentRequest {
     private String cvv;
     private Long reservationId;
 
-    // Getter - Setter
-
     public String getCardNumber() {
         return cardNumber;
     }

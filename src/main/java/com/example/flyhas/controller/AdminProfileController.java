@@ -53,7 +53,6 @@ public class AdminProfileController {
         admin.setDepartment(updatedAdmin.getDepartment());
         admin.setNationalId(updatedAdmin.getNationalId());
         admin.setEmployeeNumber(updatedAdmin.getEmployeeNumber());
-        // Email ve Rol güncellenmez
 
         adminRepository.save(admin);
         return ResponseEntity.ok("Profile updated successfully");

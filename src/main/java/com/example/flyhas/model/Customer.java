@@ -16,7 +16,6 @@ public class Customer extends BaseUser {
         return "CUSTOMER";
     }
 
-    // Getter and Setter
     public String getNationalId() {
         return nationalId;
     }

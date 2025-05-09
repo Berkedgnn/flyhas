@@ -26,7 +26,6 @@ public class Flight {
         return seats.stream().allMatch(Seat::isReserved);
     }
 
-    // Getter & Setter'lar
     public Long getId() {
         return id;
     }

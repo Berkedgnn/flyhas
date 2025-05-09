@@ -24,7 +24,6 @@ public class Admin extends BaseUser {
         return "ADMIN";
     }
 
-    // Getter and Setter
     public String getEmployeeNumber() {
         return employeeNumber;
     }

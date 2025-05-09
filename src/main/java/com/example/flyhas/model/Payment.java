@@ -17,8 +17,6 @@ public class Payment {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    // Getter - Setter
-
     public Long getId() {
         return id;
     }

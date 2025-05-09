@@ -9,9 +9,8 @@ public class ReservationRequest {
     private LocalDate birthDate;
     private String nationalId;
     private Long seatId;
-    private String reservedBy; // Giriş yapılmışsa email/ID, yapılmamışsa null
+    private String reservedBy;
 
-    // Getter ve Setter’lar
     public String getFirstName() {
         return firstName;
     }

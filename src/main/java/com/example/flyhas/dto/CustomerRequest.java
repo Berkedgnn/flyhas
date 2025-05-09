@@ -18,8 +18,6 @@ public class CustomerRequest {
     @NotBlank(message = "Password is required")
     private String password;
 
-    // Getters & Setters
-
     public String getFirstName() {
         return firstName;
     }

@@ -26,7 +26,6 @@ public class ManagerProfileController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // (GET /api/profile/manager)
     @GetMapping("/manager")
     public ResponseEntity<Manager> getManagerProfile(@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
@@ -37,7 +36,6 @@ public class ManagerProfileController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // (PUT /api/profile/manager)
     @PutMapping("/manager")
     public ResponseEntity<String> updateManagerProfile(
             @Valid @RequestBody Manager updatedManager,
@@ -59,7 +57,6 @@ public class ManagerProfileController {
         return ResponseEntity.ok("Profile updated successfully");
     }
 
-    // (PUT /api/profile/manager/password)
     @PutMapping("/manager/password")
     public ResponseEntity<String> changePassword(
             @RequestBody ChangePasswordRequest request,

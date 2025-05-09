@@ -38,7 +38,6 @@ public class CityController {
         return ResponseEntity.ok(cities);
     }
 
-    // 2) Add a new city (with optional image upload)
     @PostMapping
     public ResponseEntity<City> addCity(
             @RequestParam("name") String name,

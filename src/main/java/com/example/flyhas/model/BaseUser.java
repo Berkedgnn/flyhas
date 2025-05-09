@@ -20,7 +20,6 @@ public abstract class BaseUser {
 
     public abstract String getRole();
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

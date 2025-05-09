@@ -14,8 +14,6 @@ public class AuthResponse {
         this.firstName = firstName;
     }
 
-    // Getters and Setters
-
     public String getToken() {
         return token;
     }
